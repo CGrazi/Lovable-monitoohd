@@ -82,7 +82,7 @@ function Tickets() {
           </Link>
         ))}
       </div>
-      <NewTicket open={!!novo} onClose={() => void navigate({ search: (p) => ({ ...p, novo: undefined }) })} />
+      <NewTicket open={!!novo} onClose={() => void navigate({ search: (p) => (p.status ? { status: p.status } : {}) })} />
     </div>
   );
 }
