@@ -10,33 +10,73 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as EquipeRouteImport } from './routes/equipe'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as ChamadosIndexRouteImport } from './routes/chamados.index'
+import { Route as ChamadosIdRouteImport } from './routes/chamados.$id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EquipeRoute = EquipeRouteImport.update({
+  id: '/equipe',
+  path: '/equipe',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChamadosIndexRoute = ChamadosIndexRouteImport.update({
+  id: '/chamados/',
+  path: '/chamados/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ChamadosIdRoute = ChamadosIdRouteImport.update({
+  id: '/chamados/$id',
+  path: '/chamados/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/equipe': typeof EquipeRoute
+  '/login': typeof LoginRoute
+  '/chamados/$id': typeof ChamadosIdRoute
+  '/chamados/': typeof ChamadosIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/equipe': typeof EquipeRoute
+  '/login': typeof LoginRoute
+  '/chamados/$id': typeof ChamadosIdRoute
+  '/chamados': typeof ChamadosIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/equipe': typeof EquipeRoute
+  '/login': typeof LoginRoute
+  '/chamados/$id': typeof ChamadosIdRoute
+  '/chamados/': typeof ChamadosIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/equipe' | '/login' | '/chamados/$id' | '/chamados/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/equipe' | '/login' | '/chamados/$id' | '/chamados'
+  id: '__root__' | '/' | '/equipe' | '/login' | '/chamados/$id' | '/chamados/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  EquipeRoute: typeof EquipeRoute
+  LoginRoute: typeof LoginRoute
+  ChamadosIdRoute: typeof ChamadosIdRoute
+  ChamadosIndexRoute: typeof ChamadosIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +88,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/equipe': {
+      id: '/equipe'
+      path: '/equipe'
+      fullPath: '/equipe'
+      preLoaderRoute: typeof EquipeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chamados/': {
+      id: '/chamados/'
+      path: '/chamados'
+      fullPath: '/chamados/'
+      preLoaderRoute: typeof ChamadosIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/chamados/$id': {
+      id: '/chamados/$id'
+      path: '/chamados/$id'
+      fullPath: '/chamados/$id'
+      preLoaderRoute: typeof ChamadosIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  EquipeRoute: EquipeRoute,
+  LoginRoute: LoginRoute,
+  ChamadosIdRoute: ChamadosIdRoute,
+  ChamadosIndexRoute: ChamadosIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
